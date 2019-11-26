@@ -1,14 +1,14 @@
-import {Icon, Tooltip} from 'antd';
+import { Icon, Tooltip } from 'antd';
 import React from 'react';
-import {connect} from 'dva';
-import {formatMessage} from 'umi-plugin-react/locale';
+import { connect } from 'dva';
+import { formatMessage } from 'umi-plugin-react/locale';
 import Avatar from './AvatarDropdown';
 import HeaderSearch from '../HeaderSearch';
 import SelectLang from '../SelectLang';
 import styles from './index.less';
 
 const GlobalHeaderRight = props => {
-  const {theme, layout} = props;
+  const { theme, layout } = props;
   let className = styles.right;
 
   if (theme === 'dark' && layout === 'topmenu') {
@@ -52,16 +52,16 @@ const GlobalHeaderRight = props => {
           rel="noopener noreferrer"
           className={styles.action}
         >
-          <Icon type="question-circle-o"/>
+          <Icon type="question-circle-o" />
         </a>
       </Tooltip>
-      <Avatar/>
-      <SelectLang className={styles.action}/>
+      <Avatar />
+      <SelectLang className={styles.action} />
     </div>
   );
 };
 
-export default connect(({settings}) => ({
+export default connect(({ settings }) => ({
   theme: settings.navTheme,
   layout: settings.layout,
 }))(GlobalHeaderRight);

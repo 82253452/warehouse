@@ -1,4 +1,4 @@
-import {Table, Divider, Tag} from 'antd';
+import { Table, Divider, Tag } from 'antd';
 
 export default () => {
   const columns = [
@@ -44,7 +44,7 @@ export default () => {
       render: (text, record) => (
         <span>
           <a>Invite {record.name}</a>
-          <Divider type="vertical"/>
+          <Divider type="vertical" />
           <a>Delete</a>
         </span>
       ),
@@ -75,16 +75,8 @@ export default () => {
     },
   ];
 
-
   return (
     //  <h1>Hello,  sdgfsdsd</h1>
-    <Table columns={columns} dataSource={data}/>
-  )
-
-}
-
-
-
-
-
-
+    <Table columns={columns} dataSource={data} />
+  );
+};

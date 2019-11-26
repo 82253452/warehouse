@@ -1,7 +1,7 @@
 import React from 'react';
-import {connect} from 'dva';
-import {Redirect} from 'umi';
-import {stringify} from 'querystring';
+import { connect } from 'dva';
+import { Redirect } from 'umi';
+import { stringify } from 'querystring';
 import PageLoading from '@/components/PageLoading';
 
 class SecurityLayout extends React.Component {
@@ -13,7 +13,7 @@ class SecurityLayout extends React.Component {
     this.setState({
       isReady: true,
     });
-    const {dispatch} = this.props;
+    const { dispatch } = this.props;
 
     if (dispatch) {
       dispatch({
@@ -23,8 +23,8 @@ class SecurityLayout extends React.Component {
   }
 
   render() {
-    const {isReady} = this.state;
-    const {children, loading, currentUser} = this.props; // You can replace it to your authentication rule (such as check token exists)
+    const { isReady } = this.state;
+    const { children, loading, currentUser } = this.props; // You can replace it to your authentication rule (such as check token exists)
     // 你可以把它替换成你自己的登录认证规则（比如判断 token 是否存在）
 
     const isLogin = currentUser && currentUser.userid;
@@ -33,7 +33,7 @@ class SecurityLayout extends React.Component {
     });
 
     if ((!isLogin && loading) || !isReady) {
-      return <PageLoading/>;
+      return <PageLoading />;
     }
 
     if (!isLogin) {
@@ -44,7 +44,7 @@ class SecurityLayout extends React.Component {
   }
 }
 
-export default connect(({user, loading}) => ({
+export default connect(({ user, loading }) => ({
   currentUser: user.currentUser,
   loading: loading.models.user,
 }))(SecurityLayout);

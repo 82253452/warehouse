@@ -3,15 +3,15 @@
  * You can view component api by:
  * https://github.com/ant-design/ant-design-pro-layout
  */
-import ProLayout, {DefaultFooter} from '@ant-design/pro-layout';
-import React, {useEffect} from 'react';
+import ProLayout, { DefaultFooter } from '@ant-design/pro-layout';
+import React, { useEffect } from 'react';
 import Link from 'umi/link';
-import {connect} from 'dva';
-import {Icon, Result, Button} from 'antd';
-import {formatMessage} from 'umi-plugin-react/locale';
+import { connect } from 'dva';
+import { Icon, Result, Button } from 'antd';
+import { formatMessage } from 'umi-plugin-react/locale';
 import Authorized from '@/utils/Authorized';
 import RightContent from '@/components/GlobalHeader/RightContent';
-import {isAntDesignPro, getAuthorityFromRouter} from '@/utils/utils';
+import { isAntDesignPro, getAuthorityFromRouter } from '@/utils/utils';
 import logo from '../assets/logo.svg';
 
 const noMatch = (
@@ -32,7 +32,7 @@ const noMatch = (
  */
 const menuDataRender = menuList =>
   menuList.map(item => {
-    const localItem = {...item, children: item.children ? menuDataRender(item.children) : []};
+    const localItem = { ...item, children: item.children ? menuDataRender(item.children) : [] };
     return Authorized.check(item.authority, localItem, null);
   });
 
@@ -48,7 +48,7 @@ const defaultFooterDom = (
       },
       {
         key: 'github',
-        title: <Icon type="github"/>,
+        title: <Icon type="github" />,
         href: 'https://github.com/ant-design/ant-design-pro',
         blankTarget: true,
       },
@@ -170,7 +170,7 @@ const BasicLayout = props => {
   );
 };
 
-export default connect(({global, settings}) => ({
+export default connect(({ global, settings }) => ({
   collapsed: global.collapsed,
   settings,
 }))(BasicLayout);

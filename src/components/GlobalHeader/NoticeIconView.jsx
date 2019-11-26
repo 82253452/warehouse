@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import {Tag, message} from 'antd';
-import {connect} from 'dva';
-import {formatMessage} from 'umi-plugin-react/locale';
+import React, { Component } from 'react';
+import { Tag, message } from 'antd';
+import { connect } from 'dva';
+import { formatMessage } from 'umi-plugin-react/locale';
 import groupBy from 'lodash/groupBy';
 import moment from 'moment';
 import NoticeIcon from '../NoticeIcon';
@@ -9,7 +9,7 @@ import styles from './index.less';
 
 class GlobalHeaderRight extends Component {
   componentDidMount() {
-    const {dispatch} = this.props;
+    const { dispatch } = this.props;
 
     if (dispatch) {
       dispatch({
@@ -19,8 +19,8 @@ class GlobalHeaderRight extends Component {
   }
 
   changeReadState = clickedItem => {
-    const {id} = clickedItem;
-    const {dispatch} = this.props;
+    const { id } = clickedItem;
+    const { dispatch } = this.props;
 
     if (dispatch) {
       dispatch({
@@ -29,8 +29,9 @@ class GlobalHeaderRight extends Component {
       });
     }
   };
+
   handleNoticeClear = (title, key) => {
-    const {dispatch} = this.props;
+    const { dispatch } = this.props;
     message.success(
       `${formatMessage({
         id: 'component.noticeIcon.cleared',
@@ -44,15 +45,16 @@ class GlobalHeaderRight extends Component {
       });
     }
   };
+
   getNoticeData = () => {
-    const {notices = []} = this.props;
+    const { notices = [] } = this.props;
 
     if (notices.length === 0) {
       return {};
     }
 
     const newNotices = notices.map(notice => {
-      const newNotice = {...notice};
+      const newNotice = { ...notice };
 
       if (newNotice.datetime) {
         newNotice.datetime = moment(notice.datetime).fromNow();
@@ -85,6 +87,7 @@ class GlobalHeaderRight extends Component {
     });
     return groupBy(newNotices, 'type');
   };
+
   getUnreadData = noticeData => {
     const unreadMsg = {};
     Object.keys(noticeData).forEach(key => {
@@ -102,7 +105,7 @@ class GlobalHeaderRight extends Component {
   };
 
   render() {
-    const {currentUser, fetchingNotices, onNoticeVisibleChange} = this.props;
+    const { currentUser, fetchingNotices, onNoticeVisibleChange } = this.props;
     const noticeData = this.getNoticeData();
     const unreadMsg = this.getUnreadData(noticeData);
     return (
@@ -165,7 +168,7 @@ class GlobalHeaderRight extends Component {
   }
 }
 
-export default connect(({user, global, loading}) => ({
+export default connect(({ user, global, loading }) => ({
   currentUser: user.currentUser,
   collapsed: global.collapsed,
   fetchingMoreNotices: loading.effects['global/fetchMoreNotices'],

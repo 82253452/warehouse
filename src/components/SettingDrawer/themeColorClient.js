@@ -10,9 +10,7 @@ export default {
     const divide = 10; // 淡化（即less的tint）
 
     let lightens = new Array(lightCount).fill(0);
-    lightens = lightens.map((_, i) = > client.varyColor.lighten(color, i / divide)
-  )
-    ;
+    lightens = lightens.map((_, i) => client.varyColor.lighten(color, i / divide));
     const colorPalettes = generate(color);
     const rgb = client.varyColor.toNum3(color.replace('#', '')).join(',');
     return lightens.concat(colorPalettes).concat(rgb);
