@@ -1,6 +1,4 @@
-const getNotices = (req, res) =
->
-{
+const getNotices = (req, res) => {
   res.json([
     {
       id: '000000001',
@@ -98,9 +96,7 @@ const getNotices = (req, res) =
       type: 'event',
     },
   ]);
-}
-;
-
+};
 export default {
   'GET /api/notices': getNotices,
 };
