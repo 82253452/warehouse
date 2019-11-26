@@ -26,9 +26,7 @@ function getModulePackageName(module) {
   return packageName;
 }
 
-export default config =
->
-{
+export default config => {
   // preview.pro.ant.design only do not use in your production;
   if (
     process.env.ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION === 'site' ||
@@ -69,55 +67,47 @@ export default config =
       minSize: 0,
       cacheGroups: {
         vendors: {
-          test: module = > {
-          const packageName = getModulePackageName(module) || '';
+          test: module => {
+            const packageName = getModulePackageName(module) || '';
 
-  if (packageName) {
-    return [
-      'bizcharts',
-      'gg-editor',
-      'g6',
-      '@antv',
-      'gg-editor-core',
-      'bizcharts-plugin-slider',
-    ].includes(packageName);
-  }
+            if (packageName) {
+              return [
+                'bizcharts',
+                'gg-editor',
+                'g6',
+                '@antv',
+                'gg-editor-core',
+                'bizcharts-plugin-slider',
+              ].includes(packageName);
+            }
 
-  return false;
-},
+            return false;
+          },
 
-  name(module)
-  {
-    const packageName = getModulePackageName(module);
+          name(module) {
+            const packageName = getModulePackageName(module);
 
-    if (packageName) {
-      if (['bizcharts', '@antv_data-set'].indexOf(packageName) >= 0) {
-        return 'viz'; // visualization package
-      }
-    }
+            if (packageName) {
+              if (['bizcharts', '@antv_data-set'].indexOf(packageName) >= 0) {
+                return 'viz'; // visualization package
+              }
+            }
 
-    return 'misc';
-  }
-,
-},
-},
-})
-  ;
-}
-;
+            return 'misc';
+          },
+        },
+      },
+    });
+};
 
-const getAntdSerials = color =
->
-{
+const getAntdSerials = color => {
   const lightNum = 9;
   const devide10 = 10; // 淡化（即less的tint）
 
-  const lightens = new Array(lightNum).fill(undefined).map((_, i) = > {
+  const lightens = new Array(lightNum).fill(undefined).map((_, i) => {
     return ThemeColorReplacer.varyColor.lighten(color, i / devide10);
-})
-  ;
+  });
   const colorPalettes = generate(color);
   const rgb = ThemeColorReplacer.varyColor.toNum3(color.replace('#', '')).join(',');
   return lightens.concat(colorPalettes).concat(rgb);
-}
-;
+};
