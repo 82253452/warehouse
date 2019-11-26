@@ -20,7 +20,7 @@ steps:
   - name: build-dist
     image: node:10
     commands:
-      - npm run build:prod
+      - npm run build
 
   - name: rebuild-cache
     image: drillster/drone-volume-cache
