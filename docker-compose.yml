@@ -1,0 +1,13 @@
+version: "3"
+networks:
+  default:
+    external:
+      name: default-network
+services:
+  ware-page:
+    container_name: drone-ware-page
+    image: swr.cn-north-1.myhuaweicloud.com/a82253452/ware-page
+    labels:
+      - traefik.http.routers.ware-page-http.rule=Host(`ware.zhihuizhan.net`)
+      - traefik.http.routers.ware-page.rule=Host(`ware.zhihuizhan.net`)
+      - traefik.http.routers.ware-page.tls.certresolver=mytlschallenge

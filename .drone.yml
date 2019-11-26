@@ -1,0 +1,70 @@
+kind: pipeline
+name: drone
+steps:
+  - name: restore-cache
+    image: drillster/drone-volume-cache
+    settings:
+      restore: true
+      mount:
+        - ./.npm-cache
+        - ./node_modules
+    volumes:
+      - name: cache
+        path: /cache
+  - name: npm-install
+    image: node:10
+    commands:
+      - npm config set cache ./.npm-cache --global
+      - npm install
+
+  - name: build-dist
+    image: node:10
+    commands:
+      - npm run build:prod
+
+  - name: rebuild-cache
+    image: drillster/drone-volume-cache
+    settings:
+      rebuild: true
+      mount:
+        - ./.npm-cache
+        - ./node_modules
+    volumes:
+      - name: cache
+        path: /cache
+
+  - name: build
+    image: plugins/docker
+    settings:
+      username: cn-north-1@8BKNSGZGCNYMTOUZR9YS
+      password: e119c7e6f7a4572454fa96f7b8b6fa34d37a00e7e16caa3274b69c0c6eeded7b
+      registry: swr.cn-north-1.myhuaweicloud.com
+      repo: swr.cn-north-1.myhuaweicloud.com/a82253452/ware-page
+      auto_tag: true
+
+  - name: code-scp
+    image: appleboy/drone-scp
+    settings:
+      host: 121.36.56.213
+      username: root
+      password: Yp82253452
+      port: 22
+      target: /opt/projects/ware-page
+      source: docker-compose.yml
+
+  - name: code-deploy
+    image: appleboy/drone-ssh
+    settings:
+      host: 121.36.56.213
+      username: root
+      password: Yp82253452
+      port: 22
+      script:
+        - cd /opt/projects/ware-page
+        - docker-compose pull
+        - docker-compose up -d --force-recreate
+
+volumes:
+  - name: cache
+    host:
+      path: /tmp/cache
