@@ -115,6 +115,24 @@ export default {
               component: './hou',
             },
             {
+              path: '/product',
+              name: '商品列表',
+              icon: 'smile',
+              component: './product',
+            },
+            {
+              path: '/productType',
+              name: '商品类型预设',
+              icon: 'smile',
+              component: './productType',
+            },
+            {
+              path: '/merchant',
+              name: '商家认证',
+              icon: 'smile',
+              component: './merchant',
+            },
+            {
               path: '/admin',
               name: 'admin',
               icon: 'crown',

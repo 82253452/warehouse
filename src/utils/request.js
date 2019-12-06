@@ -4,6 +4,7 @@
  */
 import { extend } from 'umi-request';
 import { notification } from 'antd';
+import configs from '../../config/env';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -53,5 +54,25 @@ const request = extend({
   errorHandler,
   // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
+  headers: {
+    'X-Token': localStorage.getItem('X-Token'),
+  },
+});
+// 中间件，对请求前、响应后做处理
+request.use(async (ctx, next) => {
+  const { req } = ctx;
+  const { url, options } = req;
+  ctx.req.url = `${configs[process.env.NODE_ENV].API_SERVER}${url}`;
+  ctx.req.options = {
+    ...options,
+    foo: 'foo',
+  };
+  await next();
+
+  const { res } = ctx;
+  const { success = false } = res; // 假设返回结果为 : { success: false, errorCode: 'B001' }
+  if (!success) {
+    // 对异常情况做对应处理
+  }
 });
 export default request;
