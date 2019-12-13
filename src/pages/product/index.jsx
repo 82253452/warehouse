@@ -11,7 +11,7 @@ const BASE = '/admin/product';
 export default props => {
   const [list, setList] = useState([]);
   const [visible, setVisible] = useState(false);
-  const [queryParam, setQueryParam] = useState({ pageSize: 10, pageIndex: 1 });
+  const [queryParam, setQueryParam] = useState({ pageSize: 10, pageIndex: 1, type: 1 });
   const formRef = useRef(null);
   const { Option } = Select;
   const header = [
@@ -24,51 +24,103 @@ export default props => {
   const columns = [
     {
       title: '编号',
-      dataIndex: 'carId',
-      key: 'carId',
+      dataIndex: 'id',
+      key: 'id',
     },
     {
       title: '发布商家',
-      dataIndex: 'userName',
-      key: 'userName',
+      dataIndex: 'nickName',
+      key: 'nickName',
     },
     {
-      title: '价格',
+      title: '商品价格',
       dataIndex: 'price',
       key: 'price',
+    },
+    {
+      title: '运费',
+      dataIndex: 'freight',
+      key: 'freight',
     },
     {
       title: '模式',
       dataIndex: 'type',
       key: 'type',
+      render: (text)=>{
+        if(text===1){
+          return '一口价'
+        }
+        return '叫价'
+      }
     },
     {
       title: '状态',
       dataIndex: 'status',
       key: 'status',
-    },
+      render: (text, record) => {
+        var str ='上架'
+        if(text===2){
+          str='下架'
+        }        
+        if(record.closeStatus===1){
+            str+='(售出下架)'
+            //return <span>(售出下架)</span>
+          }
+          else if(record.closeStatus===2){
+            str+='(主动下架)'
+          }
+          else if(record.closeStatus===3){
+            str+='(超时下架)'
+          }
+          else if(record.closeStatus===4){
+            str+='(违规下架)'
+          }
+        return str
+      }
+             
+        
+    //     return  ({
+            
+    //         () =>{
+    //          return <span>1111111</span>
+    //           if(record.closeStatus===1){
+    //             '(售出下架)'
+    //           }
+    //           else if(record.closeStatus===2){
+    //             '(售出下架)'
+    //           }
+    //         }
+          
+    //     })
+      
+   },
     {
       title: '报价次数',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'offerCount',
+      key: 'offerCount',
     },
     {
       title: '操作',
       dataIndex: 'id',
-      render: (text, record) => (
-        <span>
-          <a onClick={() => modify(record)}>修改</a>
-          <Divider type="vertical" />
-          <Popconfirm
+      render: (text, record) => {       
+        
+          if(record.status!==2){
+          return  <span>
+            <Popconfirm
             title="确定删除数据?"
             onConfirm={() => deleteData(record.id)}
             okText="确定"
             cancelText="取消"
           >
-            <a href="#">删除</a>
+            <a href="#">下架</a>
           </Popconfirm>
-        </span>
-      ),
+          <Divider type="vertical" />
+          <a onClick={() => modify(record)}>查看详情</a>
+          </span>
+        }
+      return <span><a onClick={() => modify(record)}>查看详情</a></span>
+       
+      },
     },
   ];
   const items = [
@@ -88,7 +140,7 @@ export default props => {
   }, [queryParam]);
 
   function queryAllData() {
-    queryPage(BASE, queryParam).then(data => data && data.data && setList(data.data.data));
+    queryPage(queryParam).then(data => data && data.data && setList(data.data.data));
   }
 
   function onChange(e) {
