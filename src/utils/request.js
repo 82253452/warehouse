@@ -54,16 +54,14 @@ const request = extend({
   errorHandler,
   // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
-  headers: {
-    'X-Token': localStorage.getItem('X-Token'),
-  },
 });
 // 中间件，对请求前、响应后做处理
 request.use(async (ctx, next) => {
   const { req } = ctx;
   const { url, options } = req;
   ctx.req.url = `${configs[process.env.NODE_ENV].API_SERVER}${url}`;
-  ctx.req.options = {
+  options.headers = { ...options.headers, 'X-Token': localStorage.getItem('X-Token') };
+  req.options = {
     ...options,
     foo: 'foo',
   };
