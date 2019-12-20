@@ -108,17 +108,23 @@ export default {
               icon: 'smile',
               component: './Welcome',
             },
-            {
-              path: '/hou',
-              name: 'hou',
-              icon: 'smile',
-              component: './hou',
-            },
+            // {
+            //   path: '/hou',
+            //   name: 'hou',
+            //   icon: 'smile',
+            //   component: './hou',
+            // },
             {
               path: '/product',
               name: '商品列表',
               icon: 'smile',
               component: './product',
+            },
+            {
+              path: '/findProduct',
+              name: '寻货列表',
+              icon: 'smile',
+              component: './findProduct',
             },
             {
               path: '/productType',
@@ -127,18 +133,36 @@ export default {
               component: './productType',
             },
             {
+              path: '/order',
+              name: '订单管理',
+              icon: 'smile',
+              component: './order',
+            },
+            {
+              path: '/bond',
+              name: '押金管理',
+              icon: 'smile',
+              component: './bond',
+            },
+            {
+              path: '/userAuth',
+              name: '个人认证',
+              icon: 'smile',
+              component: './userAuth',
+            },
+            {
               path: '/merchant',
               name: '商家认证',
               icon: 'smile',
               component: './merchant',
             },
-            {
-              path: '/admin',
-              name: 'admin',
-              icon: 'crown',
-              component: './Admin',
-              authority: ['admin'],
-            },
+            // {
+            //   path: '/admin',
+            //   name: 'admin',
+            //   icon: 'crown',
+            //   component: './Admin',
+            //   authority: ['admin'],
+            // },
             {
               component: './404',
             },

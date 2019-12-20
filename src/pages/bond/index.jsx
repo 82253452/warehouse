@@ -6,12 +6,12 @@ import './index.less';
 import { add, update, remove, page } from '@/services/base';
 import { queryPage,setSataus } from '@/services/product';
 
-const BASE = '/admin/product';
+const BASE = '/admin/bond';
 
 export default props => {
   const [list, setList] = useState([]);
   const [visible, setVisible] = useState(false);
-  const [queryParam, setQueryParam] = useState({ pageSize: 10, pageIndex: 1, type: 1 });
+  const [queryParam, setQueryParam] = useState({ pageSize: 10, pageIndex: 1});
   const formRef = useRef(null);
   const { Option } = Select;
   const header = [
@@ -154,7 +154,7 @@ export default props => {
   }, [queryParam]);
 
   function queryAllData() {
-    queryPage(queryParam).then(data => data && data.data && setList(data.data.data));
+    page(BASE,queryParam).then(data => data && data.data && setList(data.data.data));
   }
 
   function onChange(e) {

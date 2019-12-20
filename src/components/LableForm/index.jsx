@@ -20,18 +20,19 @@ function HeaderForm(props) {
 
   return (
     <Form className="ant-advanced-search-form" onSubmit={handleSearch}>
+       <Row>
       {props.columns &&
         props.columns.map(c => (
-          <Row>
-            <Col span={8}>
-              <Form.Item labelCol={{ span: 4 }} wrapperCol={{ span: 16 }} label={c.label}>
+          //  <Row>
+            <Col span={6}>
+              <Form.Item labelCol={{ span: 2 }} wrapperCol={{ span: 8 }} label={c.label}>
                 {getFieldDecorator(c.column)(c.render)}
               </Form.Item>
             </Col>
-          </Row>
+          // </Row>
         ))}
-      <Row>
-        <Col span={24} style={{ textAlign: 'right' }}>
+      {/* <Row> */}
+        <Col span={6} style={{ textAlign: 'right' }}>
           <Button type="primary" htmlType="submit">
             查询
           </Button>

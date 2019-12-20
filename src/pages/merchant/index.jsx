@@ -121,7 +121,7 @@ export default props => {
   }, [queryParam]);
 
   function queryAllData() {
-    queryPage(BASE, queryParam).then(data => data && data.data && setList(data.data.data));
+    page(BASE, queryParam).then(data => data && data.data && setList(data.data.data));
   }
 
   function onChange(e) {

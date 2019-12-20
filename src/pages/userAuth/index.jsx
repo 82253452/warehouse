@@ -5,36 +5,43 @@ import ColumnForm from '@/components/ColumnForm/index';
 import './index.less';
 import { add, update, remove, page } from '@/services/base';
 import { queryPage } from '@/services/product';
+import QiniuUpload from '@/components/qiniu/upload';
 
-const BASE = '/admin/productType';
+const BASE = '/admin/userAuth';
 
 export default props => {
   const [list, setList] = useState([]);
   const [visible, setVisible] = useState(false);
-  const [queryParam, setQueryParam] = useState({ limit: 10, pageIndex: 1 });
+  const [queryParam, setQueryParam] = useState({ pageSize: 10, pageIndex: 1 });
   const formRef = useRef(null);
+  const { Option } = Select;
   const header = [
     {
+      column: 'status',
+      label: '筛选',
+      render: <Input placeholder="标题" />,
+    },
+    {
       column: 'name',
-      label: '名称',
-      render: <Input placeholder="名称" />,
+      label: '',
+      render: <Input placeholder="标题" />,
     },
   ];
   const columns = [
     {
-      title: '序号',
+      title: '商家编号',
       dataIndex: 'id',
       key: 'id',
     },
     {
-      title: '商品名称',
+      title: '发布名称',
       dataIndex: 'name',
       key: 'name',
     },
     {
-      title: '商品类目',
-      dataIndex: 'typeName',
-      key: 'typeName',
+      title: '状态',
+      dataIndex: 'status',
+      key: 'status',
     },
     {
       title: '操作',
@@ -61,16 +68,52 @@ export default props => {
       render: <Input hidden />,
     },
     {
-      label: '商品名称',
+      label: '名称',
       id: 'name',
       options: {},
       render: <Input placeholder="名称" />,
     },
     {
-      label: '商品类目',
-      id: 'typeName',
+      label: '申请账号昵称',
+      id: 'name',
       options: {},
       render: <Input placeholder="名称" />,
+    },
+    {
+      label: '公司名称',
+      id: 'title',
+      options: {},
+      render: <Input placeholder="名称" />,
+    },
+    {
+      label: '详细地址',
+      id: 'address',
+      options: {},
+      render: <Input placeholder="名称" />,
+    },
+    {
+      label: '职位',
+      id: 'adminUser',
+      options: {},
+      render: <Input placeholder="名称" />,
+    },
+    {
+      label: '营业执照照片',
+      id: 'licenseImg',
+      options: {},
+      render: <QiniuUpload single />,
+    },
+    {
+      label: '名片照片',
+      id: 'cardImg',
+      options: {},
+      render: <QiniuUpload single />,
+    },
+    {
+      label: '展厅照片',
+      id: 'showImg',
+      options: {},
+      render: <QiniuUpload single />,
     },
   ];
   useEffect(() => {
@@ -107,7 +150,7 @@ export default props => {
   function handleSubmit(value) {
     setVisible(false);
     value.id
-      ? update(BASE, value).then(() => queryAllData())
+      ? update(value).then(() => queryAllData())
       : add(BASE, value).then(() => queryAllData());
   }
 
