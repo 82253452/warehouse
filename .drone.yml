@@ -61,6 +61,7 @@ steps:
       port: 22
       script:
         - cd /opt/projects/ware-page
+        - docker-compose stop
         - docker-compose pull
         - docker-compose up -d --force-recreate
 
