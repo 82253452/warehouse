@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Col, Divider, Form, Input, Popconfirm, Table, Select, Row } from 'antd';
+import { Col, Divider, Form, Input, Popconfirm, Table, Select, Row, Modal } from 'antd';
 import HeaderForm from '@/components/LableForm/index';
 import ColumnForm from '@/components/ColumnForm/index';
 import './index.less';
@@ -14,16 +14,18 @@ export default props => {
   const [queryParam, setQueryParam] = useState({ pageSize: 10, pageIndex: 1, type: 2 });
   const formRef = useRef(null);
   const { Option } = Select;
+  const [temp,setTemp] =useState({})
   const header = [
+    // {
+    //   label: '筛选',
+    //   column: 'saleType',
+    //   render: <Select allowClear  placeholder="模式">
+    //             <Option value="1">一口价</Option>
+    //             <Option value="2">叫价</Option>
+    //           </Select>
+    // },
     {
       label: '筛选',
-      column: 'saleType',
-      render: <Select allowClear  placeholder="模式">
-                <Option value="1">一口价</Option>
-                <Option value="2">叫价</Option>
-              </Select>
-    },
-    {
       column: 'status',
       render: <Select allowClear  placeholder="状态">
                 <Option value="1">上架</Option>
@@ -51,22 +53,22 @@ export default props => {
       dataIndex: 'price',
       key: 'price',
     },
-    {
-      title: '运费',
-      dataIndex: 'freight',
-      key: 'freight',
-    },
-    {
-      title: '模式',
-      dataIndex: 'saleType',
-      key: 'saleType',
-      render: (text)=>{
-        if(text===1){
-          return '一口价'
-        }
-        return '叫价'
-      }
-    },
+    // {
+    //   title: '运费',
+    //   dataIndex: 'freight',
+    //   key: 'freight',
+    // },
+    // {
+    //   title: '模式',
+    //   dataIndex: 'saleType',
+    //   key: 'saleType',
+    //   render: (text)=>{
+    //     if(text===1){
+    //       return '一口价'
+    //     }
+    //     return '叫价'
+    //   }
+    // },
     {
       title: '状态',
       dataIndex: 'status',
@@ -108,10 +110,25 @@ export default props => {
     //     })
       
    },
+   {
+    title: '数量',
+    dataIndex: 'count',
+    key: 'count',
+    },
     {
-      title: '报价次数',
-      dataIndex: 'offerCount',
-      key: 'offerCount',
+      title: '颜色',
+      dataIndex: 'color',
+      key: 'color',
+    },
+    {
+      title: '成色',
+      dataIndex: 'quality',
+      key: 'quality',
+    },
+    {
+      title: '浏览次数',
+      dataIndex: 'showCount',
+      key: 'showCount',
     },
     {
       title: '操作',
@@ -129,10 +146,10 @@ export default props => {
             <a href="#">下架</a>
           </Popconfirm>
           <Divider type="vertical" />
-          <a onClick={() => modify(record)}>查看详情</a>
+          <a onClick={() => modify(record)}>查看图片</a>
           </span>
         }
-      return <span><a onClick={() => modify(record)}>查看详情</a></span>
+      return <span><a onClick={() => modify(record)}>查看图片</a></span>
        
       },
     },
@@ -164,7 +181,11 @@ export default props => {
 
   function modify(record) {
     setVisible(true);
-    formRef.current.setFieldsValue(record);
+    if(record.image){
+      record.imageList = record.image.split(',');
+    }
+    setTemp(record)
+    // formRef.current.setFieldsValue(record);
   }
 
   function deleteData(id) {
@@ -195,13 +216,21 @@ export default props => {
     <div>
       <HeaderForm handleSearch={handleSearch} columns={header}></HeaderForm>
       <Table columns={columns} dataSource={list} onChange={onChange} />
-      <ColumnForm
+      <Modal title="详情" visible={visible} onOk={() => setVisible(false)} onCancel={() => setVisible(false)} width='40%'>
+        <div>
+        {temp.imageList&&temp.imageList.map(item => (
+             <p>{!!item && <img src={item} alt="avatar" style={{ width: '30%' }} />}</p>
+            ))
+        }
+        </div>
+      </Modal>
+      {/* <ColumnForm
         ref={formRef}
         visible={visible}
         handleSubmit={handleSubmit}
         items={items}
         handleCancel={() => setVisible(false)}
-      ></ColumnForm>
+      ></ColumnForm> */}
     </div>
   );
 };
