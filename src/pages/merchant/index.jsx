@@ -4,7 +4,7 @@ import HeaderForm from '@/components/LableForm/index';
 import ColumnForm from '@/components/ColumnForm/index';
 import './index.less';
 import { add, update, remove, page } from '@/services/base';
-import { queryPage } from '@/services/product';
+import { setStatus } from '@/services/merchant';
 import QiniuUpload from '@/components/qiniu/upload';
 
 const BASE = '/admin/merchant';
@@ -137,13 +137,13 @@ export default props => {
           <p>职位：   {temp.title}</p>
           <p>营业执照：</p>
           <p>{!!temp.licenseImg && <img src={temp.licenseImg} alt="avatar" style={{ width: '30%' }} />}</p>
-          <p>展厅照片:</p>
+          {/* <p>展厅照片:</p>
           <div>
           {temp.imageList&&temp.imageList.map(item => (
               <p>{!!item && <img src={item} alt="avatar" style={{ width: '30%' }} />}</p>
               ))
           }
-          </div>
+          </div> */}
           <p>
             <Button type="danger" onClick={() => status(temp.id,2)} disabled={temp.status!=1}>不通过</Button>
             <Divider type="vertical" />
