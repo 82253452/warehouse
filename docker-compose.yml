@@ -1,17 +1,11 @@
 version: "3"
 etworks:
-  swarm:
+  default:
     external:
       name: swarm-net
-  back:
-    external:
-      name: default-network
 services:
   ware-page:
     image: swr.cn-north-1.myhuaweicloud.com/a82253452/ware-page
-    networks:
-      - back
-      - swarm
     deploy:
       labels:
         - traefik.http.routers.ware-page-http.rule=Host(`ware.zhihuizhan.net`)
