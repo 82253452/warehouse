@@ -11,4 +11,5 @@ services:
         - traefik.http.routers.ware-page-http.rule=Host(`ware.zhihuizhan.net`)
         - traefik.http.middlewares.ware-page-http.redirectscheme.scheme=https_redirect
         - traefik.http.routers.ware-page.rule=Host(`ware.zhihuizhan.net`)
+        - traefik.http.services.ware-page.loadbalancer.server.port=80
         - traefik.http.routers.ware-page.tls.certresolver=mytlschallenge
