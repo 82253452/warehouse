@@ -62,7 +62,7 @@ steps:
       port: 22
       script:
         - cd /opt/projects/ware-page
-        - docker stack deploy -c docker-compose.yml ware-page
+        - docker stack deploy -c docker-compose.yml ware-page --with-registry-auth
 
 volumes:
   - name: cache
