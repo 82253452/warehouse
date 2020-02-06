@@ -1,5 +1,5 @@
 version: "3"
-etworks:
+networks:
   default:
     external:
       name: swarm-net
