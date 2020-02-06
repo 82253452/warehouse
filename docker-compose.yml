@@ -1,13 +1,20 @@
 version: "3"
-networks:
+etworks:
   default:
+    external:
+      name: swarm-net
+  back:
     external:
       name: default-network
 services:
   ware-page:
-    container_name: drone-ware-page
     image: swr.cn-north-1.myhuaweicloud.com/a82253452/ware-page
-    labels:
-      - traefik.http.routers.ware-page-http.rule=Host(`ware.zhihuizhan.net`)
-      - traefik.http.routers.ware-page.rule=Host(`ware.zhihuizhan.net`)
-      - traefik.http.routers.ware-page.tls.certresolver=mytlschallenge
+    networks:
+      - back
+      deploy:
+        labels:
+          - traefik.http.routers.ware-page-http.rule=Host(`ware.zhihuizhan.net`)
+          - traefik.http.middlewares.ware-page-http.redirectscheme.scheme=https_redirect
+
+          - traefik.http.routers.ware-page.rule=Host(`ware.zhihuizhan.net`)
+          - traefik.http.routers.ware-page.tls.certresolver=mytlschallenge
