@@ -3,10 +3,10 @@ const configs = {
     API_SERVER: 'http://localhost:8080',
   },
   sit: {
-    API_SERVER: 'https://mass.zhihuizhan.net/api',
+    API_SERVER: 'https://ware.zhihuizhan.net/api',
   },
   production: {
-    API_SERVER: 'https://mass.zhihuizhan.net/api',
+    API_SERVER: 'https://ware.zhihuizhan.net/api',
   },
 };
 

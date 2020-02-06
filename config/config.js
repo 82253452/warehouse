@@ -65,6 +65,7 @@ if (isAntDesignProPreview) {
 }
 
 export default {
+  history: 'hash',
   plugins,
   block: {
     // 国内用户可以使用码云
@@ -132,18 +133,18 @@ export default {
               icon: 'smile',
               component: './productType',
             },
-            {
-              path: '/order',
-              name: '订单管理',
-              icon: 'smile',
-              component: './order',
-            },
-            {
-              path: '/bond',
-              name: '押金管理',
-              icon: 'smile',
-              component: './bond',
-            },
+            // {
+            //   path: '/order',
+            //   name: '订单管理',
+            //   icon: 'smile',
+            //   component: './order',
+            // },
+            // {
+            //   path: '/bond',
+            //   name: '押金管理',
+            //   icon: 'smile',
+            //   component: './bond',
+            // },
             {
               path: '/userAuth',
               name: '个人认证',
