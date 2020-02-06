@@ -1,6 +1,6 @@
 version: "3"
 etworks:
-  default:
+  swarm:
     external:
       name: swarm-net
   back:
@@ -11,9 +11,10 @@ services:
     image: swr.cn-north-1.myhuaweicloud.com/a82253452/ware-page
     networks:
       - back
-      deploy:
-        labels:
-          - traefik.http.routers.ware-page-http.rule=Host(`ware.zhihuizhan.net`)
-          - traefik.http.middlewares.ware-page-http.redirectscheme.scheme=https_redirect
-          - traefik.http.routers.ware-page.rule=Host(`ware.zhihuizhan.net`)
-          - traefik.http.routers.ware-page.tls.certresolver=mytlschallenge
+      - swarm
+    deploy:
+      labels:
+        - traefik.http.routers.ware-page-http.rule=Host(`ware.zhihuizhan.net`)
+        - traefik.http.middlewares.ware-page-http.redirectscheme.scheme=https_redirect
+        - traefik.http.routers.ware-page.rule=Host(`ware.zhihuizhan.net`)
+        - traefik.http.routers.ware-page.tls.certresolver=mytlschallenge
