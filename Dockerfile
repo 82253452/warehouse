@@ -5,6 +5,6 @@ ARG APPDIR
 VOLUME ${workdir}
 WORKDIR ${workdir}
 
-ADD ${APPDIR} /usr/share/nginx/html/
+ADD ${APPDIR} /app/usr/share/nginx/html/
 
 EXPOSE ${PORT}
