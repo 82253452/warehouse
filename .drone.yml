@@ -97,7 +97,7 @@ volumes:
     host:
       path: /root/.docker
 kind: pipeline
-name: ware-page
+name: test-ware-page
 
 trigger:
   branch:
