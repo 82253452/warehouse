@@ -3,7 +3,7 @@ name: ware-page
 
 trigger:
   branch:
-    - master
+    - latest
 
 environment:
   DOMAIN: ware.zhihuizhan.net
