@@ -24,7 +24,7 @@ steps:
     commands:
       - npm config set cache ./.npm-cache --global
       - npm config set registry http://registry.npm.taobao.org/
-
+      - npm install
 
   - name: npm-build
     image: node:10
