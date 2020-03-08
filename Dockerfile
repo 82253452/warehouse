@@ -1,2 +1,10 @@
 FROM nginx:alpine
-COPY dist /usr/share/nginx/html/
+
+ARG workdir=/app
+ARG APPDIR
+VOLUME ${workdir}
+WORKDIR ${workdir}
+
+ADD ${APPDIR} app.jar
+
+EXPOSE ${PORT}
