@@ -4,7 +4,6 @@
  */
 import { extend } from 'umi-request';
 import { notification } from 'antd';
-import configs from '../../config/env';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -59,7 +58,7 @@ const request = extend({
 request.use(async (ctx, next) => {
   const { req } = ctx;
   const { url, options } = req;
-  ctx.req.url = `${configs[process.env.NODE_ENV].API_SERVER}${url}`;
+  ctx.req.url = `${process.env.API_SERVER}${url}`;
   options.headers = { ...options.headers, 'X-Token': localStorage.getItem('X-Token') };
   req.options = {
     ...options,

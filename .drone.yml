@@ -25,9 +25,11 @@ steps:
       - npm config set cache ./.npm-cache --global
       - npm config set registry http://registry.npm.taobao.org/
       - npm install && npm run build
-      - ls
-      - cd dist
-      - ls
+  - name: npm-build
+    image: node:10
+    commands:
+      - npm run build:prod
+
 
   - name: rebuild-cache
     image: drillster/drone-volume-cache
