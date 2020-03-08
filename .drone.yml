@@ -12,13 +12,38 @@ environment:
 
 steps:
 
-  - name: maven-install
-    image: maven:3-jdk-8
+  - name: restore-cache
+      image: drillster/drone-volume-cache
+      settings:
+        restore: true
+        mount:
+          - ./.npm-cache
+          - ./node_modules
+      volumes:
+        - name: cache
+          path: /cache
+  - name: npm-install
+    image: node:10
     commands:
-      - mvn install -DskipTests=true -Dmaven.javadoc.skip=true
+      - npm config set cache ./.npm-cache --global
+      - npm install
+
+  - name: build-dist
+    image: node:10
+    commands:
+      - npm run build
+
+  - name: rebuild-cache
+    image: drillster/drone-volume-cache
+    settings:
+      rebuild: true
+      mount:
+        - ./.npm-cache
+        - ./node_modules
     volumes:
-      - name: maven-cache
-        path: /root/.m2
+      - name: cache
+        path: /cache
+
 
   - name: build
     image: plugins/docker
@@ -62,9 +87,9 @@ steps:
       - docker stack deploy -c docker-compose.yml ${DRONE_STAGE_NAME}-${DRONE_BRANCH} --with-registry-auth
 
 volumes:
-  - name: maven-cache
+  - name: cache
     host:
-      path: /opt/cache/maven
+      path: /tmp/cache
   - name: dockersock
     host:
       path: /var/run/docker.sock
@@ -85,13 +110,38 @@ environment:
 
 steps:
 
-  - name: maven-install
-    image: maven:3-jdk-8
+  - name: restore-cache
+      image: drillster/drone-volume-cache
+      settings:
+        restore: true
+        mount:
+          - ./.npm-cache
+          - ./node_modules
+      volumes:
+        - name: cache
+          path: /cache
+  - name: npm-install
+    image: node:10
     commands:
-      - mvn install -DskipTests=true -Dmaven.javadoc.skip=true
+      - npm config set cache ./.npm-cache --global
+      - npm install
+
+  - name: build-dist
+    image: node:10
+    commands:
+      - npm run build
+
+  - name: rebuild-cache
+    image: drillster/drone-volume-cache
+    settings:
+      rebuild: true
+      mount:
+        - ./.npm-cache
+        - ./node_modules
     volumes:
-      - name: maven-cache
-        path: /root/.m2
+      - name: cache
+        path: /cache
+
 
   - name: build
     image: plugins/docker
@@ -135,9 +185,9 @@ steps:
       - docker stack deploy -c docker-compose.yml ${DRONE_STAGE_NAME}-${DRONE_BRANCH} --with-registry-auth
 
 volumes:
-  - name: maven-cache
+  - name: cache
     host:
-      path: /opt/cache/maven
+      path: /tmp/cache
   - name: dockersock
     host:
       path: /var/run/docker.sock
