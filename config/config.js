@@ -157,6 +157,12 @@ export default {
               icon: 'smile',
               component: './merchant',
             },
+            {
+              path: '/brand',
+              name: '车辆信息',
+              icon: 'smile',
+              component: './brand',
+            },
             // {
             //   path: '/admin',
             //   name: 'admin',
