@@ -1,10 +1,10 @@
 FROM nginx:alpine
 
-ARG workdir=/app
+ARG workdir=/
 ARG APPDIR
 VOLUME ${workdir}
 WORKDIR ${workdir}
 
-ADD ${APPDIR} /app/usr/share/nginx/html/
+COPY ${APPDIR} /usr/share/nginx/html/
 
 EXPOSE ${PORT}
