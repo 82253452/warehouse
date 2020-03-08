@@ -24,11 +24,23 @@ steps:
     commands:
       - npm config set cache ./.npm-cache --global
       - npm config set registry http://registry.npm.taobao.org/
-      - npm install && npm run build
+
+
   - name: npm-build
     image: node:10
+    when:
+      branch:
+        - master
     commands:
-      - npm run build:prod
+      - npm run build-prod
+
+  - name: test-npm-build
+    image: node:10
+    when:
+      branch:
+        - test
+    commands:
+      - npm run build-test
 
 
   - name: rebuild-cache
