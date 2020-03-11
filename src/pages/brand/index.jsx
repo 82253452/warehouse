@@ -61,6 +61,18 @@ export default () => {
       ),
     },
   ];
+  const extColumns = [
+    {
+      title: '序号',
+      dataIndex: 'serialId',
+      key: 'serialId',
+    },
+    {
+      title: '名称',
+      dataIndex: 'serialName',
+      key: 'serialName',
+    },
+  ];
   const items = [
     {
       id: 'id',

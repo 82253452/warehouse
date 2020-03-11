@@ -1,16 +1,16 @@
 import React from 'react';
 import { createContainer } from 'unstated-next';
-import { add, update, remove, page } from '@/services/base';
-import useBasePage from '@/utils/hooks/useBasePage';
+import { add, update, remove } from '@/services/base';
+import { queryPage } from '@/services/brand';
+import usePage from '@/utils/hooks/usePage';
 
 const BASE = '/admin/brand';
 
 export function useData() {
-  const { list, fetch, pagination, body, setBody, onChange, listLoading } = useBasePage(
+  const { list, fetch, pagination, body, setBody, onChange, listLoading } = usePage(
     [],
     {},
-    BASE,
-    page,
+    queryPage,
   );
 
   function deleteData(id) {
