@@ -4,6 +4,7 @@
  */
 import { extend } from 'umi-request';
 import { notification } from 'antd';
+import router from 'umi/router';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -22,6 +23,7 @@ const codeMessage = {
   503: '服务不可用，服务器暂时过载或维护。',
   504: '网关超时。',
 };
+
 /**
  * 异常处理程序
  */
@@ -54,6 +56,22 @@ const request = extend({
   // 默认错误处理
   credentials: 'include', // 默认请求是否带上cookie
 });
+
+// response拦截器, 处理response
+request.interceptors.response.use(async (response, options) => {
+  const { code, message, errorMsg } = await response.clone().json();
+  if (code === 100) {
+    router.push('/user/login');
+  }
+  if (code !== 0) {
+    notification.error({
+      message: message || errorMsg,
+    });
+  }
+
+  return response;
+});
+
 // 中间件，对请求前、响应后做处理
 request.use(async (ctx, next) => {
   const { req } = ctx;
