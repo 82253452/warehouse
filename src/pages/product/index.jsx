@@ -1,20 +1,28 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Col, Divider, Form, Input, Popconfirm, Table, Select, Row ,Modal} from 'antd';
+import { Col, Divider, Form, Input, Popconfirm, Table, Select, Row, Modal } from 'antd';
 import HeaderForm from '@/components/LableForm/index';
 import ColumnForm from '@/components/ColumnForm/index';
+import ProductContainer from '@/hookModels/product';
+import { useEffectOnce } from 'react-use';
 import './index.less';
-import { add, update, remove, page } from '@/services/base';
-import { queryPage,setSataus } from '@/services/product';
 
-const BASE = '/admin/product';
+export default () => {
+  const {
+    list,
+    fetch,
+    pagination,
+    onChange,
+    deleteData,
+    handleSearch,
+    saveOrUpdate,
+    setProductStatus,
+    listLoading,
+  } = ProductContainer.useContainer();
 
-export default props => {
-  const [list, setList] = useState([]);
   const [visible, setVisible] = useState(false);
-  const [queryParam, setQueryParam] = useState({ pageSize: 10, pageIndex: 1, type: 1 });
   const formRef = useRef(null);
   const { Option } = Select;
-  const [temp,setTemp] =useState({})
+  const [temp, setTemp] = useState({});
   const header = [
     // {
     //   label: '筛选',
@@ -27,14 +35,16 @@ export default props => {
     {
       label: '筛选',
       column: 'status',
-      render: <Select allowClear  placeholder="状态">
-                <Option value="1">上架</Option>
-                <Option value="2">下架</Option>
-              </Select>
+      render: (
+        <Select allowClear placeholder="状态">
+          <Option value="1">上架</Option>
+          <Option value="2">下架</Option>
+        </Select>
+      ),
     },
     {
       column: 'userId',
-      render: <Input placeholder="商家" />
+      render: <Input placeholder="商家" />,
     },
   ];
   const columns = [
@@ -74,42 +84,37 @@ export default props => {
       dataIndex: 'status',
       key: 'status',
       render: (text, record) => {
-        var str ='上架'
-        if(text===2){
-          str='下架'
-        }        
-        if(record.closeStatus===1){
-            str+='(售出下架)'
-            //return <span>(售出下架)</span>
-          }
-          else if(record.closeStatus===2){
-            str+='(主动下架)'
-          }
-          else if(record.closeStatus===3){
-            str+='(超时下架)'
-          }
-          else if(record.closeStatus===4){
-            str+='(违规下架)'
-          }
-        return str
-      }
-             
-        
-    //     return  ({
-            
-    //         () =>{
-    //          return <span>1111111</span>
-    //           if(record.closeStatus===1){
-    //             '(售出下架)'
-    //           }
-    //           else if(record.closeStatus===2){
-    //             '(售出下架)'
-    //           }
-    //         }
-          
-    //     })
-      
-   },
+        let str = '上架';
+        if (text === 2) {
+          str = '下架';
+        }
+        if (record.closeStatus === 1) {
+          str += '(售出下架)';
+          // return <span>(售出下架)</span>
+        } else if (record.closeStatus === 2) {
+          str += '(主动下架)';
+        } else if (record.closeStatus === 3) {
+          str += '(超时下架)';
+        } else if (record.closeStatus === 4) {
+          str += '(违规下架)';
+        }
+        return str;
+      },
+
+      //     return  ({
+
+      //         () =>{
+      //          return <span>1111111</span>
+      //           if(record.closeStatus===1){
+      //             '(售出下架)'
+      //           }
+      //           else if(record.closeStatus===2){
+      //             '(售出下架)'
+      //           }
+      //         }
+
+      //     })
+    },
     {
       title: '数量',
       dataIndex: 'count',
@@ -134,24 +139,28 @@ export default props => {
       title: '操作',
       dataIndex: 'id',
       key: 'id2',
-      render: (text, record) => {       
-        
-          if(record.status!==2){
-          return  <span>
-            <Popconfirm
-            title="确定执行?"
-            onConfirm={() => setProductStatus(record.id)}
-            okText="确定"
-            cancelText="取消"
-          >
-            <a href="#">下架</a>
-          </Popconfirm>
-          <Divider type="vertical" />
-          <a onClick={() => modify(record)}>查看图片</a>
-          </span>
+      render: (text, record) => {
+        if (record.status !== 2) {
+          return (
+            <span>
+              <Popconfirm
+                title="确定执行?"
+                onConfirm={() => setProductStatus(record.id)}
+                okText="确定"
+                cancelText="取消"
+              >
+                <a href="#">下架</a>
+              </Popconfirm>
+              <Divider type="vertical" />
+              <a onClick={() => modify(record)}>查看图片</a>
+            </span>
+          );
         }
-      return <span><a onClick={() => modify(record)}>查看图片</a></span>
-       
+        return (
+          <span>
+            <a onClick={() => modify(record)}>查看图片</a>
+          </span>
+        );
       },
     },
   ];
@@ -161,64 +170,54 @@ export default props => {
       render: <Input hidden />,
     },
     {
-      label: '名称',
-      id: 'name',
+      label: '',
+      id: 'image',
       options: {},
-      render: <Input placeholder="名称" />,
+      render: <ImageList />,
     },
   ];
-  useEffect(() => {
-    queryAllData();
-  }, [queryParam]);
 
-  function queryAllData() {
-    queryPage(queryParam).then(data => data && data.data && setList(data.data.data));
-  }
-
-  function onChange(e) {
-    queryParam.pageNum = e.current;
-    setQueryParam({ ...queryParam });
-  }
+  useEffectOnce(() => {
+    fetch();
+  });
 
   function modify(record) {
-    setVisible(true);   
-    if(record.image){
-      record.imageList = record.image.split(',');
-    }
-    setTemp(record)
-    //formRef.current.setFieldsValue(record);
+    setVisible(true);
+    formRef.current.setFieldsValue(record);
   }
 
-  function deleteData(id) {
-    remove(BASE, id).then(() => queryAllData());
+  function handleSubmit() {
+    setVisible(false);
   }
 
-  function setProductStatus(id) {
-    setSataus(id).then(() => queryAllData());
-  }
-
-  function handleSearch(values) {
-    setQueryParam({ ...queryParam, ...values });
-  }
   return (
     <div>
       <HeaderForm handleSearch={handleSearch} columns={header}></HeaderForm>
-      <Table columns={columns} dataSource={list} onChange={onChange} />
-      <Modal title="详情" visible={visible} onOk={() => setVisible(false)} onCancel={() => setVisible(false)} width='40%'>
-        <div>
-        {temp.imageList&&temp.imageList.map(item => (
-             <p>{!!item && <img src={item} alt="avatar" style={{ width: '30%' }} />}</p>
-            ))
-        }
-        </div>
-      </Modal>
-      {/* <ColumnForm
+      <Table
+        columns={columns}
+        dataSource={list}
+        onChange={onChange}
+        pagination={pagination}
+        loading={listLoading}
+      />
+      <ColumnForm
         ref={formRef}
-        visible={visible}
         handleSubmit={handleSubmit}
+        visible={visible}
         items={items}
         handleCancel={() => setVisible(false)}
-      ></ColumnForm> */}
+      ></ColumnForm>
     </div>
   );
 };
+
+export function ImageList({ value }) {
+  return (
+    <div>
+      {value &&
+        value
+          .split(',')
+          .map(item => <p>{!!item && <img src={item} alt="avatar" style={{ width: '70%' }} />}</p>)}
+    </div>
+  );
+}

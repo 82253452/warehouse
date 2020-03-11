@@ -3,15 +3,21 @@ import { Col, Divider, Form, Input, Popconfirm, Table, Select, Row } from 'antd'
 import HeaderForm from '@/components/LableForm/index';
 import ColumnForm from '@/components/ColumnForm/index';
 import './index.less';
-import { add, update, remove, page } from '@/services/base';
-import { queryPage } from '@/services/brand';
+import BrandContainer from '@/hookModels/brand';
+import { useEffectOnce } from 'react-use';
 
-const BASE = '/admin/brand';
-
-export default props => {
-  const [list, setList] = useState([]);
+export default () => {
+  const {
+    list,
+    fetch,
+    pagination,
+    onChange,
+    deleteData,
+    handleSearch,
+    saveOrUpdate,
+    listLoading,
+  } = BrandContainer.useContainer();
   const [visible, setVisible] = useState(false);
-  const [queryParam, setQueryParam] = useState({ limit: 10, pageIndex: 1 });
   const formRef = useRef(null);
   const header = [
     {
@@ -73,30 +79,14 @@ export default props => {
     //   render: <Input placeholder="名称" />,
     // },
   ];
-  useEffect(() => {
-    queryAllData();
-  }, [queryParam]);
 
-  function queryAllData() {
-    page(BASE, queryParam).then(data => data && data.data && setList(data.data.data));
-  }
-
-  function onChange(e) {
-    queryParam.pageNum = e.current;
-    setQueryParam({ ...queryParam });
-  }
+  useEffectOnce(() => {
+    fetch();
+  });
 
   function modify(record) {
     setVisible(true);
     formRef.current.setFieldsValue(record);
-  }
-
-  function deleteData(id) {
-    remove(BASE, id).then(() => queryAllData());
-  }
-
-  function handleSearch(values) {
-    setQueryParam({ ...queryParam, ...values });
   }
 
   function hanldeAdd() {
@@ -106,15 +96,19 @@ export default props => {
 
   function handleSubmit(value) {
     setVisible(false);
-    value.id
-      ? update(BASE, value).then(() => queryAllData())
-      : add(BASE, value).then(() => queryAllData());
+    saveOrUpdate(value);
   }
 
   return (
     <div>
       <HeaderForm handleSearch={handleSearch} hanldeAdd={hanldeAdd} columns={header}></HeaderForm>
-      <Table columns={columns} dataSource={list} onChange={onChange} />
+      <Table
+        columns={columns}
+        dataSource={list}
+        onChange={onChange}
+        pagination={pagination}
+        loading={listLoading}
+      />
       <ColumnForm
         ref={formRef}
         visible={visible}
