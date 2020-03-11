@@ -1,6 +1,5 @@
 export default {
-  define:{
-    "process.env.API_SERVER": 'https://test-ware.zhihuizhan.net/api'
-  }
-}
-
+  define: {
+    'process.env.API_SERVER': 'http://localhost:8002',
+  },
+};
