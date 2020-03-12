@@ -7,5 +7,8 @@ export function queryPage(data) {
 }
 
 export function setSataus(id) {
-  return request.post(`${BASE}/status/`+id);
+  return request.post(`${BASE}/status/${id}`);
+}
+export function saveOrUpdateCarserial(data) {
+  return request.post(`${BASE}/saveOrUpdateCarserial`, { data });
 }

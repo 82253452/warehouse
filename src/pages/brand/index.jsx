@@ -1,10 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Col, Divider, Form, Input, Popconfirm, Table, Select, Row } from 'antd';
+import React, { useRef, useState } from 'react';
+import { Divider, Input, Popconfirm, Table } from 'antd';
 import HeaderForm from '@/components/LableForm/index';
 import ColumnForm from '@/components/ColumnForm/index';
-import './index.less';
 import BrandContainer from '@/hookModels/brand';
 import { useEffectOnce } from 'react-use';
+import { saveOrUpdateCarserial } from '@/services/brand';
+import './index.less';
 
 export default () => {
   const {
@@ -47,11 +48,15 @@ export default () => {
       dataIndex: 'id',
       render: (text, record) => (
         <span>
+          <a hidden={record.pid} onClick={() => add(record)}>
+            新增车型
+          </a>
+          <Divider type="vertical" />
           <a onClick={() => modify(record)}>修改</a>
           <Divider type="vertical" />
           <Popconfirm
             title="确定删除数据?"
-            onConfirm={() => deleteData(record.id)}
+            onConfirm={() => deleteData(record)}
             okText="确定"
             cancelText="取消"
           >
@@ -61,21 +66,13 @@ export default () => {
       ),
     },
   ];
-  const extColumns = [
-    {
-      title: '序号',
-      dataIndex: 'serialId',
-      key: 'serialId',
-    },
-    {
-      title: '名称',
-      dataIndex: 'serialName',
-      key: 'serialName',
-    },
-  ];
   const items = [
     {
       id: 'id',
+      render: <Input hidden />,
+    },
+    {
+      id: 'pid',
       render: <Input hidden />,
     },
     {
@@ -95,6 +92,12 @@ export default () => {
   useEffectOnce(() => {
     fetch();
   });
+
+  function add(record) {
+    formRef.current.resetFields();
+    formRef.current.setFieldsValue({ pid: record.id });
+    setVisible(true);
+  }
 
   function modify(record) {
     setVisible(true);

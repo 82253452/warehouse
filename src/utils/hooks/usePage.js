@@ -31,6 +31,7 @@ export default function(init, paramInit, api) {
   }
 
   function onChange(e) {
+    setList([]);
     setBody({ ...body, pageIndex: e.current });
   }
 

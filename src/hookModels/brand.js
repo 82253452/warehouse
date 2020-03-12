@@ -1,7 +1,7 @@
 import React from 'react';
 import { createContainer } from 'unstated-next';
 import { add, update, remove } from '@/services/base';
-import { queryPage } from '@/services/brand';
+import { queryPage, saveOrUpdateCarserial } from '@/services/brand';
 import usePage from '@/utils/hooks/usePage';
 
 const BASE = '/admin/brand';
@@ -13,8 +13,8 @@ export function useData() {
     queryPage,
   );
 
-  function deleteData(id) {
-    remove(BASE, id).then(() => fetch());
+  function deleteData(record) {
+    remove(record.pid ? '/admin/brand/serial' : BASE, record.id).then(() => fetch());
   }
 
   function handleSearch(values) {
@@ -22,7 +22,11 @@ export function useData() {
   }
 
   function saveOrUpdate(value) {
-    value.id ? update(BASE, value).then(() => fetch()) : add(BASE, value).then(() => fetch());
+    if (value.pid) {
+      saveOrUpdateCarserial(value).then(() => fetch());
+    } else {
+      value.id ? update(BASE, value).then(() => fetch()) : add(BASE, value).then(() => fetch());
+    }
   }
 
   return {
