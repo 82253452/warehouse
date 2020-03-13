@@ -7,14 +7,17 @@ import usePage from '@/utils/hooks/usePage';
 const BASE = '/admin/brand';
 
 export function useData() {
-  const { list, fetch, pagination, body, setBody, onChange, listLoading } = usePage(
+  const { list, fetch, pagination, body, setBody, onChange, listLoading, setList} = usePage(
     [],
     {},
     queryPage,
   );
 
   function deleteData(record) {
-    remove(record.pid ? '/admin/brand/serial' : BASE, record.id).then(() => fetch());
+    remove(record.pid ? '/admin/brand/serial' : BASE, record.id).then(() => {
+      setList([])
+      fetch()
+    });
   }
 
   function handleSearch(values) {
