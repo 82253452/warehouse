@@ -44,7 +44,7 @@ const UserLayout = props => {
             <div className={styles.header}>
               <Link to="/">
                 <img alt="logo" className={styles.logo} src={logo} />
-                <span className={styles.title}>95 Block</span>
+                <span className={styles.title}> Block</span>
               </Link>
             </div>
             <div className={styles.desc}>95 Block 是中国最具影响力的 汽配交易平台</div>
