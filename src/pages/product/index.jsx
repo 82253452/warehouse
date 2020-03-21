@@ -152,12 +152,12 @@ export default () => {
     },
     {
       title: '封面',
-      dataIndex: 'firstImg',
-      key: 'firstImg',
+      dataIndex: 'img',
+      key: 'img',
       render: (text, record) => {
         return (
           <div>
-            <p>{!!record.firstImg && <img src={record.firstImg} alt="avatar" style={{ width: '100px' }} />}</p>
+            <p>{text && <img src={text.split(',')[0]} alt="avatar" style={{ width: '100px' }} />}</p>
           </div>
         );
       }
