@@ -143,7 +143,6 @@ steps:
         - failure
     commands:
       - docker stack deploy -c docker-compose.yml ${DRONE_STAGE_NAME}-${DRONE_BRANCH} --with-registry-auth
-
 volumes:
   - name: cache
     host:
