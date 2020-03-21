@@ -3,7 +3,7 @@ name: ware-page
 
 
 environment:
-  DOMAIN: zhihuizhan.net
+  DOMAIN: ware.zhihuizhan.net
   PATHPREFIX:
   PROFILE: prod
   APPDIR: dist
