@@ -152,8 +152,8 @@ export default () => {
     },
     {
       title: '封面',
-      dataIndex: 'img',
-      key: 'img',
+      dataIndex: 'image',
+      key: 'image',
       render: (text, record) => {
         return (
           <div>
