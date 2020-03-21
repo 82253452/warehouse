@@ -47,8 +47,7 @@ const plugins = [
   [
     'umi-plugin-pro-block',
     {
-      moveMock: true
-      ,
+      moveMock: true,
       moveService: false,
       modifyRequest: true,
       autoAddMenu: true,
