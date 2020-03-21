@@ -12,15 +12,15 @@ environment:
 steps:
 
   - name: restore-cache
-      image: drillster/drone-volume-cache
-      settings:
-        restore: true
-        mount:
-          - ./.npm-cache
-          - ./node_modules
-      volumes:
-        - name: cache
-          path: /cache
+    image: drillster/drone-volume-cache
+    settings:
+      restore: true
+      mount:
+        - ./.npm-cache
+        - ./node_modules
+    volumes:
+      - name: cache
+        path: /cache
 
   - name: npm-install
     image: node:10
