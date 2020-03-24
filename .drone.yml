@@ -7,7 +7,7 @@ trigger:
     - test
 
 steps:
-
+sdfdsfsf
   - name: restore-cache
     image: drillster/drone-volume-cache
     settings:
@@ -144,6 +144,14 @@ steps:
     commands:
       - docker stack deploy -c docker-compose.yml ${DRONE_STAGE_NAME}-${DRONE_BRANCH} --with-registry-auth
 
+  - name: dingtalk
+    image: lddsb/drone-dingtalk-message
+    settings:
+      token: https://oapi.dingtalk.com/robot/send?access_token=8231ca915f3e42b623b4a28e0ae6e5ca99861e6553770900eab4be898386cc18
+      type: markdown
+      message_color: true
+      message_pic: true
+      sha_link: true
 volumes:
   - name: cache
     host:
