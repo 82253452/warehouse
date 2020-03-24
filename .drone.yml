@@ -7,7 +7,7 @@ trigger:
     - test
 
 steps:
-sdfdsfsf
+
   - name: restore-cache
     image: drillster/drone-volume-cache
     settings:
