@@ -107,6 +107,7 @@ volumes:
     host:
       path: /root/.docker
 
+
 ---
 kind: pipeline
 name: ware-page-test
