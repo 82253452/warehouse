@@ -1,6 +1,10 @@
 kind: pipeline
 name: mass-page
 
+trigger:
+  branch:
+    - master
+
 environment:
   DOMAIN: ware.zhihuizhan.net
   PATHPREFIX:
