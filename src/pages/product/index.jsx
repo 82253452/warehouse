@@ -59,9 +59,24 @@ export default () => {
       key: 'nickName',
     },
     {
+      title: '商品',
+      dataIndex: 'productTypeName',
+      key: 'productTypeName',
+    },
+    {
+      title: '车型',
+      dataIndex: 'serialName',
+      key: 'serialName',
+    },
+    {
       title: '商品价格',
       dataIndex: 'price',
       key: 'price',
+    },
+    {
+      title: '原价',
+      dataIndex: 'originalPrice',
+      key: 'originalPrice',
     },
     // {
     //   title: '运费',
@@ -134,6 +149,20 @@ export default () => {
       title: '浏览次数',
       dataIndex: 'showCount',
       key: 'showCount',
+    },
+    {
+      title: '封面',
+      dataIndex: 'image',
+      key: 'image',
+      render: (text, record) => {
+        return (
+          <div>
+            <p>
+              {text && <img src={text.split(',')[0]} alt="avatar" style={{ width: '100px' }} />}
+            </p>
+          </div>
+        );
+      },
     },
     {
       title: '操作',

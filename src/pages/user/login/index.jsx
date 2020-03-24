@@ -112,7 +112,7 @@ class Login extends Component {
               name="username"
               placeholder={`${formatMessage({
                 id: 'user-login.login.userName',
-              })}: admin or user`}
+              })}`}
               rules={[
                 {
                   required: true,
@@ -126,7 +126,7 @@ class Login extends Component {
               name="password"
               placeholder={`${formatMessage({
                 id: 'user-login.login.password',
-              })}: ant.design`}
+              })} `}
               rules={[
                 {
                   required: true,
@@ -205,14 +205,14 @@ class Login extends Component {
             <Checkbox checked={autoLogin} onChange={this.changeAutoLogin}>
               <FormattedMessage id="user-login.login.remember-me" />
             </Checkbox>
-            <a
+            {/* <a
               style={{
                 float: 'right',
               }}
               href=""
             >
               <FormattedMessage id="user-login.login.forgot-password" />
-            </a>
+            </a> */}
           </div>
           <Submit loading={submitting}>
             <FormattedMessage id="user-login.login.login" />
