@@ -1,10 +1,6 @@
 kind: pipeline
 name: mass-page
 
-trigger:
-  branch:
-    - master
-
 environment:
   DOMAIN: ware.zhihuizhan.net
   PATHPREFIX:
@@ -103,6 +99,9 @@ volumes:
   - name: registry-auth
     host:
       path: /root/.docker
+
+kind: pipeline
+name: mass-page-test
 
 trigger:
   branch:
