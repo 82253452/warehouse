@@ -105,7 +105,7 @@ trigger:
     - test
 
 environment:
-  DOMAIN: ware-test.zhihuizhan.net
+  DOMAIN: test-ware.zhihuizhan.net
   PATHPREFIX:
   PROFILE: test
   APPDIR: dist
