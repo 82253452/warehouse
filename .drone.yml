@@ -88,6 +88,10 @@ steps:
       message_color: true
       message_pic: true
       sha_link: true
+    when:
+      status:
+        - success
+        - failure
 trigger:
   branch:
     - master
@@ -194,6 +198,10 @@ steps:
       message_color: true
       message_pic: true
       sha_link: true
+    when:
+      status:
+        - success
+        - failure
 
 trigger:
   branch:
