@@ -1,10 +1,6 @@
 kind: pipeline
 name: mass-page
 
-trigger:
-  branch:
-    - master
-
 environment:
   DOMAIN: ware.zhihuizhan.net
   PATHPREFIX:
@@ -92,6 +88,9 @@ steps:
       message_color: true
       message_pic: true
       sha_link: true
+trigger:
+  branch:
+    - master
 
 volumes:
   - name: cache
@@ -104,12 +103,9 @@ volumes:
     host:
       path: /root/.docker
 
+---
 kind: pipeline
 name: mass-page-test
-
-trigger:
-  branch:
-    - test
 
 environment:
   DOMAIN: test-ware.zhihuizhan.net
@@ -198,6 +194,10 @@ steps:
       message_color: true
       message_pic: true
       sha_link: true
+
+trigger:
+  branch:
+    - test
 
 volumes:
   - name: cache
