@@ -1,5 +1,5 @@
 kind: pipeline
-name: mass-page
+name: ware-page
 
 environment:
   DOMAIN: ware.zhihuizhan.net
@@ -109,7 +109,7 @@ volumes:
 
 ---
 kind: pipeline
-name: mass-page-test
+name: ware-page-test
 
 environment:
   DOMAIN: test-ware.zhihuizhan.net
