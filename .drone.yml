@@ -152,8 +152,6 @@ steps:
 
   - name: release-failed
     image: docker:dind
-    environment:
-      IMAGE: ${REGISTRY}/${DRONE_STAGE_NAME}/${DRONE_BRANCH}:${DRONE_BUILD_NUMBER}
     volumes:
       - name: dockersock
         path: /var/run/docker.sock
