@@ -41,16 +41,16 @@ steps:
         path: /cache
 
   - name: release
-      image: docker:dind
-      volumes:
-        - name: dockersock
-          path: /var/run/docker.sock
-        - name: registry-auth
-          path: /root/.docker
-      commands:
-        - docker build --rm=true -f Dockerfile -t $REGISTRY/${DRONE_STAGE_NAME}/${DRONE_BRANCH}:${DRONE_BUILD_NUMBER} . --pull=true --build-arg APPDIR=$APPDIR --build-arg PORT=$PORT
-        - docker push $REGISTRY/${DRONE_STAGE_NAME}/${DRONE_BRANCH}:${DRONE_BUILD_NUMBER}
-        - docker service update --image $REGISTRY/${DRONE_STAGE_NAME}/${DRONE_BRANCH}:${DRONE_BUILD_NUMBER} ${DRONE_STAGE_NAME}-${DRONE_BRANCH}_service --with-registry-auth
+    image: docker:dind
+    volumes:
+      - name: dockersock
+        path: /var/run/docker.sock
+      - name: registry-auth
+        path: /root/.docker
+    commands:
+      - docker build --rm=true -f Dockerfile -t $REGISTRY/${DRONE_STAGE_NAME}/${DRONE_BRANCH}:${DRONE_BUILD_NUMBER} . --pull=true --build-arg APPDIR=$APPDIR --build-arg PORT=$PORT
+      - docker push $REGISTRY/${DRONE_STAGE_NAME}/${DRONE_BRANCH}:${DRONE_BUILD_NUMBER}
+      - docker service update --image $REGISTRY/${DRONE_STAGE_NAME}/${DRONE_BRANCH}:${DRONE_BUILD_NUMBER} ${DRONE_STAGE_NAME}-${DRONE_BRANCH}_service --with-registry-auth
 
   - name: release-failed
     image: docker:dind
